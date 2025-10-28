@@ -5,18 +5,17 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class LibreriaService {
-  private apiUrl = 'http://localhost:9898/api';
+export class LibreriaService {   // 👈 renombrar aquí
+  private baseUrlCa = 'http://localhost:9696/api/ca_pedido';
+  private baseUrlDe = 'http://localhost:9696/api/de_pedido';
 
   constructor(private http: HttpClient) {}
 
-  // Buscar pedidos por nombre de cliente
-  buscarPedidosPorCliente(nombre: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/ca_pedido/cliente/${nombre}`);
+  getPedidosPorCliente(nombre: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrlCa}/cliente/${encodeURIComponent(nombre)}`);
   }
 
-  // Obtener el detalle del pedido por ID
-  obtenerDetallePedido(idPedido: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/de_pedido/pedido/${idPedido}`);
+  getDetallesPorPedido(idpedido: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrlDe}/pedido/${idpedido}`);
   }
 }

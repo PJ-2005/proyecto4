@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { PedidosComponent } from './components/pedidos/pedidos.component';
 
-export const appRoutes: Routes = [
+export const routes: Routes = [
   { path: '', redirectTo: 'pedidos', pathMatch: 'full' },
-  { path: 'pedidos', component: PedidosComponent }
+  { path: 'pedidos', component: PedidosComponent },
 ];

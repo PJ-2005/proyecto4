@@ -13,47 +13,45 @@ import { LibreriaService } from '../../services/libreria.service';
 export class PedidosComponent {
   nombreCliente: string = '';
   pedidos: any[] = [];
-  detallePedido: any[] = [];
+  detalles: any[] = [];
+  pedidoSeleccionado: number | null = null;
   mostrarModal: boolean = false;
 
   constructor(private libreriaService: LibreriaService) {}
 
-  buscarPedidos() {
-    if (!this.nombreCliente.trim()) {
-      alert('Ingrese un nombre de cliente');
+  buscarPedidosPorCliente() {
+    if (this.nombreCliente.trim() === '') {
+      this.pedidos = [];
       return;
     }
 
-    console.log('Buscando pedidos para:', this.nombreCliente);
-    this.libreriaService.buscarPedidosPorCliente(this.nombreCliente).subscribe({
-      next: (data) => {
-        console.log('Pedidos obtenidos:', data);
+    this.libreriaService.getPedidosPorCliente(this.nombreCliente).subscribe({
+      next: (data: any[]) => {
         this.pedidos = data;
-        if (data.length === 0) alert('No se encontraron pedidos para ese cliente');
       },
-      error: (err) => {
-        console.error('Error al buscar pedidos:', err);
-        alert('Error al buscar pedidos en el servidor');
+      error: (err: any) => {
+        console.error('Error al obtener pedidos:', err);
+        this.pedidos = [];
       }
     });
   }
 
-  abrirModal(idPedido: number) {
-    console.log('Obteniendo detalle de pedido:', idPedido);
-    this.libreriaService.obtenerDetallePedido(idPedido).subscribe({
-      next: (data) => {
-        console.log('Detalle obtenido:', data);
-        this.detallePedido = data;
+  verDetalles(idpedido: number) {
+    this.pedidoSeleccionado = idpedido;
+    this.libreriaService.getDetallesPorPedido(idpedido).subscribe({
+      next: (data: any[]) => {
+        this.detalles = data;
         this.mostrarModal = true;
       },
-      error: (err) => {
-        console.error('Error al obtener detalle del pedido:', err);
-        alert('Error al obtener el detalle del pedido');
+      error: (err: any) => {
+        console.error('Error al obtener detalles:', err);
+        this.detalles = [];
       }
     });
   }
 
   cerrarModal() {
     this.mostrarModal = false;
+    this.detalles = [];
   }
 }
