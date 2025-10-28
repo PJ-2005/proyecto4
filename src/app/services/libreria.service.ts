@@ -6,17 +6,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LibreriaService {
-
-  private baseUrl = 'http://localhost:9898/api';
+  private apiUrl = 'http://localhost:9898/api';
 
   constructor(private http: HttpClient) {}
 
+  // Buscar pedidos por nombre de cliente
   buscarPedidosPorCliente(nombre: string): Observable<any[]> {
-    const encodedName = encodeURIComponent(nombre.trim());
-    return this.http.get<any[]>(`${this.baseUrl}/ca_pedido/cliente/${encodedName}`);
+    return this.http.get<any[]>(`${this.apiUrl}/ca_pedido/cliente/${nombre}`);
   }
 
+  // Obtener el detalle del pedido por ID
   obtenerDetallePedido(idPedido: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/de_pedido/pedido/${idPedido}`);
+    return this.http.get<any[]>(`${this.apiUrl}/de_pedido/pedido/${idPedido}`);
   }
 }

@@ -11,7 +11,6 @@ import { LibreriaService } from '../../services/libreria.service';
   styleUrls: ['./pedidos.component.css']
 })
 export class PedidosComponent {
-
   nombreCliente: string = '';
   pedidos: any[] = [];
   detallePedido: any[] = [];
@@ -20,29 +19,36 @@ export class PedidosComponent {
   constructor(private libreriaService: LibreriaService) {}
 
   buscarPedidos() {
-    if (!this.nombreCliente.trim()) return;
+    if (!this.nombreCliente.trim()) {
+      alert('Ingrese un nombre de cliente');
+      return;
+    }
 
+    console.log('Buscando pedidos para:', this.nombreCliente);
     this.libreriaService.buscarPedidosPorCliente(this.nombreCliente).subscribe({
       next: (data) => {
+        console.log('Pedidos obtenidos:', data);
         this.pedidos = data;
         if (data.length === 0) alert('No se encontraron pedidos para ese cliente');
       },
-      error: (err: any) => {
-        console.error(err);
-        alert('Error al buscar pedidos');
+      error: (err) => {
+        console.error('Error al buscar pedidos:', err);
+        alert('Error al buscar pedidos en el servidor');
       }
     });
   }
 
   abrirModal(idPedido: number) {
+    console.log('Obteniendo detalle de pedido:', idPedido);
     this.libreriaService.obtenerDetallePedido(idPedido).subscribe({
       next: (data) => {
+        console.log('Detalle obtenido:', data);
         this.detallePedido = data;
         this.mostrarModal = true;
       },
-      error: (err: any) => {
-        console.error(err);
-        alert('Error al obtener detalle del pedido');
+      error: (err) => {
+        console.error('Error al obtener detalle del pedido:', err);
+        alert('Error al obtener el detalle del pedido');
       }
     });
   }

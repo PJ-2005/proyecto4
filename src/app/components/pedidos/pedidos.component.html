@@ -1,55 +1,48 @@
-<div class="container">
-  <h2>Buscar Pedidos por Cliente</h2>
+<div class="busqueda">
+  <h2>Buscar pedidos por cliente</h2>
+  <input type="text" [(ngModel)]="nombreCliente" placeholder="Ingrese nombre del cliente">
+  <button (click)="buscarPedidos()">Buscar</button>
+</div>
 
-  <div class="busqueda">
-    <input [(ngModel)]="nombreCliente" placeholder="Nombre del cliente">
-    <button (click)="buscarPedidos()">Buscar</button>
-  </div>
+<table *ngIf="pedidos.length > 0" border="1">
+  <thead>
+    <tr>
+      <th>ID Pedido</th>
+      <th>Cliente</th>
+      <th>Fecha</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of pedidos">
+      <td>{{ p.idpedido }}</td>
+      <td>{{ p.cliente?.nombre }}</td>
+      <td>{{ p.fecha }}</td>
+      <td><button (click)="abrirModal(p.idpedido)">Ver detalle</button></td>
+    </tr>
+  </tbody>
+</table>
 
-  <table *ngIf="pedidos.length > 0">
-    <thead>
-      <tr>
-        <th>ID Pedido</th>
-        <th>ID Empleado</th>
-        <th>Estado</th>
-        <th>Factura</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let p of pedidos">
-        <td>{{p.IdPedido}}</td>
-        <td>{{p.IdEmp}}</td>
-        <td>{{p.Estado}}</td>
-        <td>
-          <a href="#" (click)="abrirModal(p.IdPedido)">Factura</a>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <!-- Modal -->
-  <div class="modal-overlay" *ngIf="mostrarModal">
-    <div class="modal-content">
-      <h3>Detalle del Pedido</h3>
-
-      <table>
-        <thead>
-          <tr>
-            <th>ID Pedido</th>
-            <th>Producto</th>
-            <th>Cantidad</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let d of detallePedido">
-            <td>{{d.IdPedido}}</td>
-            <td>{{d.Nombre}}</td>
-            <td>{{d.Cant}}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <button (click)="cerrarModal()">Cerrar</button>
-    </div>
+<!-- Modal -->
+<div class="modal" *ngIf="mostrarModal">
+  <div class="modal-content">
+    <h3>Detalle del Pedido</h3>
+    <table border="1">
+      <thead>
+        <tr>
+          <th>Producto</th>
+          <th>Cantidad</th>
+          <th>Precio</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of detallePedido">
+          <td>{{ d.producto?.nombre }}</td>
+          <td>{{ d.cantidad }}</td>
+          <td>{{ d.precio }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="cerrarModal()">Cerrar</button>
   </div>
 </div>

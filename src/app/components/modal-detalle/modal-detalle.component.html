@@ -1,24 +1,24 @@
-<div class="modal-overlay">
+<div class="modal" *ngIf="mostrar">
   <div class="modal-content">
     <h3>Detalle del Pedido</h3>
-
     <table>
       <thead>
         <tr>
-          <th>ID Pedido</th>
+          <th>ID Detalle</th>
           <th>Producto</th>
           <th>Cantidad</th>
+          <th>Precio</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let d of detalle">
-          <td>{{d.IdPedido}}</td>
-          <td>{{d.Nombre}}</td>
-          <td>{{d.Cant}}</td>
+        <tr *ngFor="let item of detallePedido">
+          <td>{{ item.idDetalle }}</td>
+          <td>{{ item.producto }}</td>
+          <td>{{ item.cantidad }}</td>
+          <td>{{ item.precio }}</td>
         </tr>
       </tbody>
     </table>
-
     <button (click)="cerrarModal()">Cerrar</button>
   </div>
 </div>
