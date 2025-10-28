@@ -1,0 +1,55 @@
+<div class="container">
+  <h2>Buscar Pedidos por Cliente</h2>
+
+  <div class="busqueda">
+    <input [(ngModel)]="nombreCliente" placeholder="Nombre del cliente">
+    <button (click)="buscarPedidos()">Buscar</button>
+  </div>
+
+  <table *ngIf="pedidos.length > 0">
+    <thead>
+      <tr>
+        <th>ID Pedido</th>
+        <th>ID Empleado</th>
+        <th>Estado</th>
+        <th>Factura</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of pedidos">
+        <td>{{p.IdPedido}}</td>
+        <td>{{p.IdEmp}}</td>
+        <td>{{p.Estado}}</td>
+        <td>
+          <a href="#" (click)="abrirModal(p.IdPedido)">Factura</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Modal -->
+  <div class="modal-overlay" *ngIf="mostrarModal">
+    <div class="modal-content">
+      <h3>Detalle del Pedido</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID Pedido</th>
+            <th>Producto</th>
+            <th>Cantidad</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let d of detallePedido">
+            <td>{{d.IdPedido}}</td>
+            <td>{{d.Nombre}}</td>
+            <td>{{d.Cant}}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <button (click)="cerrarModal()">Cerrar</button>
+    </div>
+  </div>
+</div>

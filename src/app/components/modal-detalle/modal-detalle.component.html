@@ -1,0 +1,24 @@
+<div class="modal-overlay">
+  <div class="modal-content">
+    <h3>Detalle del Pedido</h3>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID Pedido</th>
+          <th>Producto</th>
+          <th>Cantidad</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of detalle">
+          <td>{{d.IdPedido}}</td>
+          <td>{{d.Nombre}}</td>
+          <td>{{d.Cant}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button (click)="cerrarModal()">Cerrar</button>
+  </div>
+</div>
